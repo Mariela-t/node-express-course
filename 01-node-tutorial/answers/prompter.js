@@ -29,6 +29,7 @@ let color = "What is your favorite color?";
 const form = () => {
   return `
   <body>
+  <h1> Hello! </h1>
   <p>Favorite color:${color}</p>
   <form method="POST">
   <input name="color" placeholder="Enter favorite color here"></input>
@@ -60,6 +61,10 @@ const server = http.createServer((req, res) => {
     res.end(form());
   }
 });
+
+server.on("request", (req) => {
+  console.log("event received: ", req.method, req.url);
+});  
 
 server.listen(3000);
 console.log("The server is listening on port 3000.");
