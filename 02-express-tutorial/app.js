@@ -25,7 +25,7 @@ app.get("/api/v1/products/:productID", (req, res) => {
 app.get("/api/v1/query", (req, res) => {
    
     const{search, limit, maxPrice} = req.query;
-    let sortedProducts = [...products];
+    let sortedProducts = [];
 
     if (search){
         sortedProducts = sortedProducts.filter((product)=>{
