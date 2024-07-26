@@ -24,19 +24,27 @@ app.get("/api/v1/products/:productID", (req, res) => {
 
 app.get("/api/v1/query", (req, res) => {
    
-    const{search, limit} = req.query
-    let sortedProducts = [...products]
+    const{search, limit, maxPrice} = req.query;
+    let sortedProducts = [...products];
 
-    if(search){
+    if (search){
         sortedProducts = sortedProducts.filter((product)=>{
-            return product.name.startsWith(search)
+            return product.name.startsWith(search);
         })
     }
-    if(limit){
-        return sortedProducts = sortedProducts.slice(0,Number(limit))
+
+    if (maxPrice){
+        sortedProducts = sortedProducts.filter((product)=>{
+            return product.price < Number(maxPrice);
+        })
     }
-    if(sortedProducts.length <1){
-        return res.status(200).send("No Products matched your search")
+
+
+    if (limit){
+        sortedProducts = sortedProducts.slice(0, Number(limit));
+    }
+    if (sortedProducts.length <1){
+        return res.status(200).json({ message: "No Products matched your search" })
     }
  res.status(200).json(sortedProducts)
 });
